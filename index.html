@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<title>Yazar Paneli & Wattpad Görünümü</title>
+<style>
+body { font-family: Arial, sans-serif; margin:20px; background:#fdfdfd; color:#333; }
+h1,h2,h3,h4 { color:#333; }
+.profile, .kitaplar { margin-bottom:20px; }
+.kitaplar button, .section button { margin:5px; padding:8px 12px; cursor:pointer; }
+.section { display:none; margin-top:20px; }
+.active { display:block; }
+.line { margin-bottom:15px; }
+.line button { margin-left:5px; cursor:pointer; }
+.comments { margin-left:20px; color:blue; }
+.counter { font-size:14px; color:gray; }
+.kapak { max-width:200px; display:block; margin-bottom:15px; }
+.stil-btn { font-weight:bold; margin-left:5px; }
+.like-counter { margin-left:5px; font-size:13px; color:green; }
+</style>
+</head>
+<body>
+
+<!-- Profil -->
+<div class="profile">
+  <h1>👤 <span id="username">Sudenur Bilen</span></h1>
+  <p id="bio">Buraya açıklamanı yazabilirsin...</p>
+  <button onclick="editProfile()">Profili Düzenle</button>
+  <button onclick="toggleTheme()">🌙 Gece/Gündüz Modu</button>
+</div>
+
+<!-- Kitaplar -->
+<div class="kitaplar">
+<h2>📚 Kitaplarım</h2>
+<button onclick="showBook('kitap1')">Kitap 1: <span id="kitap1_name">İzem'in Maceraları</span></button>
+</div>
+
+<!-- Kitap 1 -->
+<div id="kitap1" class="section">
+<h2>Kitap: <span id="kitap1_title">İzem'in Maceraları</span></h2>
+
+<!-- Kapak -->
+<input type="file" id="kitap1_cover_input" onchange="setCover(this,'kitap1_cover')">
+<img id="kitap1_cover" class="kapak" src="" alt="Kapak Fotoğrafı">
+
+<h3>Bölümler</h3>
+<button onclick="showSection('kitap1_bolum1')">Bölüm 1: <span id="kitap1_bolum1_name">Başlangıç</span></button>
+<button onclick="showSection('kitap1_bolum2')">Bölüm 2: <span id="kitap1_bolum2_name">Karşılaşma</span></button>
+<button onclick="editBookName('kitap1')">📖 Kitap Adını Düzenle</button>
+
+<!-- Bölüm 1 -->
+<div id="kitap1_bolum1" class="section">
+  <h4>Bölüm 1: <span id="kitap1_bolum1_title">Başlangıç</span></h4>
+  <button onclick="editSectionName('kitap1_bolum1')">✏️ Bölüm Adını Düzenle</button>
+  <button onclick="editStory('kitap1_bolum1')">✏️ Bölümü Düzenle</button>
+  <div class="counter" id="counter_kitap1_bolum1">👁️ Görüntülenme: 0</div>
+
+  <div class="line">
+    <span>İzem dağın başındaki eve geldiğinde kar fırtınası her yeri kaplamıştı.</span>
+    <button class="stil-btn" onclick="applyStyle(this,'i')">I</button>
+    <button class="stil-btn" onclick="applyStyle(this,'b')">B</button>
+    <button class="stil-btn" onclick="applyStyle(this,'u')">U</button>
+    <button onclick="addComment(this)">Yorum Yap</button>
+    <button onclick="likeLine(this)">👍</button><span class="like-counter">0</span>
+    <div class="comments"></div>
+  </div>
+
+  <div class="line">
+    <span>Soğuk rüzgar saçlarını savuruyor, kalbi heyecanla atıyordu.</span>
+    <button class="stil-btn" onclick="applyStyle(this,'i')">I</button>
+    <button class="stil-btn" onclick="applyStyle(this,'b')">B</button>
+    <button class="stil-btn" onclick="applyStyle(this,'u')">U</button>
+    <button onclick="addComment(this)">Yorum Yap</button>
+    <button onclick="likeLine(this)">👍</button><span class="like-counter">0</span>
+    <div class="comments"></div>
+  </div>
+</div>
+
+<!-- Bölüm 2 -->
+<div id="kitap1_bolum2" class="section">
+  <h4>Bölüm 2: <span id="kitap1_bolum2_title">Karşılaşma</span></h4>
+  <button onclick="editSectionName('kitap1_bolum2')">✏️ Bölüm Adını Düzenle</button>
+  <button onclick="editStory('kitap1_bolum2')">✏️ Bölümü Düzenle</button>
+  <div class="counter" id="counter_kitap1_bolum2">👁️ Görüntülenme: 0</div>
+
+  <div class="line">
+    <span>Karan ile ilk karşılaşmaları odanın karanlık köşesinde gerçekleşti.</span>
+    <button class="stil-btn" onclick="applyStyle(this,'i')">I</button>
+    <button class="stil-btn" onclick="applyStyle(this,'b')">B</button>
+    <button class="stil-btn" onclick="applyStyle(this,'u')">U</button>
+    <button onclick="addComment(this)">Yorum Yap</button>
+    <button onclick="likeLine(this)">👍</button><span class="like-counter">0</span>
+    <div class="comments"></div>
+  </div>
+
+  <div class="line">
+    <span>Göz göze geldiklerinde kalpleri hızla çarpıyordu.</span>
+    <button class="stil-btn" onclick="applyStyle(this,'i')">I</button>
+    <button class="stil-btn" onclick="applyStyle(this,'b')">B</button>
+    <button class="stil-btn" onclick="applyStyle(this,'u')">U</button>
+    <button onclick="addComment(this)">Yorum Yap</button>
+    <button onclick="likeLine(this)">👍</button><span class="like-counter">0</span>
+    <div class="comments"></div>
+  </div>
+</div>
+
+<button onclick="backToBooks()">⬅ Kitaplarım</button>
+</div>
+
+<script>
+// Profil düzenleme
+function editProfile(){
+  let newName = prompt("Kullanıcı adını gir:");
+  let newBio = prompt("Açıklamayı gir:");
+  if(newName) document.getElementById("username").innerText = newName;
+  if(newBio) document.getElementById("bio").innerText = newBio;
+}
+
+// Kitap adı düzenleme
+function editBookName(bookId){
+  let newName = prompt("Kitap adını gir:");
+  if(newName){
+    document.getElementById(bookId + "_name").innerText = newName;
+    document.getElementById(bookId + "_title").innerText = newName;
+  }
+}
+
+// Bölüm adı düzenleme
+function editSectionName(sectionId){
+  let newName = prompt("Bölüm adını gir:");
+  if(newName){
+    document.getElementById(sectionId + "_name").innerText = newName;
+    document.getElementById(sectionId + "_title").innerText = newName;
+  }
+}
+
+// Bölüm içeriğini düzenleme
+function editStory(sectionId){
+  let sectionDiv = document.getElementById(sectionId);
+  let lines = sectionDiv.querySelectorAll('.line span');
+  lines.forEach((line, idx)=>{
+    let newText = prompt(`Satır ${idx+1} metni:`, line.innerHTML);
+    if(newText) line.innerHTML = newText;
+  });
+}
+
+// Stil uygulama
+function applyStyle(btn, style){
+  let span = btn.parentElement.querySelector('span');
+  if(style=='i') span.innerHTML = `<i>${span.innerHTML}</i>`;
+  if(style=='b') span.innerHTML = `<b>${span.innerHTML}</b>`;
+  if(style=='u') span.innerHTML = `<u>${span.innerHTML}</u>`;
+}
+
+// Kitap kapağı ekleme
+function setCover(input, coverId){
+  let file = input.files[0];
+  if(file){
+    let reader = new FileReader();
+    reader.onload = function(e){
+      document.getElementById(coverId).src = e.target.result;
+    }
+    reader.readAsDataURL(file);
+  }
+}
+
+// Kitap gösterme
+function showBook(id){
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+// Bölüm gösterme + okunma sayacı
+function showSection(id){
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+
+  let counter = document.getElementById("counter_" + id);
+  let count = localStorage.getItem("views_" + id) || 0;
+  count++;
+  localStorage.setItem("views_" + id, count);
+  counter.innerText = "👁️ Görüntülenme: " + count;
+}
+
+// Satır satır yorum ekleme
+function addComment(btn){
+  let comment = prompt("Yorumunu yaz:");
+  if(comment){
+    let commentsDiv = btn.nextElementSibling.nextElementSibling;
+    let newComment = document.createElement("div");
+    newComment.textContent = comment;
+    commentsDiv.appendChild(newComment);
+  }
+}
+
+// Satır satır beğeni
+function likeLine(btn){
+  let likeSpan = btn.nextElementSibling;
+  let count = parseInt(likeSpan.innerText);
+  count++;
+  likeSpan.innerText = count;
+}
+
+// Geri dön
+function backToBooks(){
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelector('.kitaplar').classList.add('active');
+}
+
+// Tema değiştir
+function toggleTheme(){
+  if(document.body.style.backgroundColor === 'black'){
+    document.body.style.backgroundColor = '#fdfdfd';
+    document.body.style.color = '#333';
+  } else {
+    document.body.style.backgroundColor = 'black';
+    document.body.style.color = 'white';
+  }
+}
+
+// Başlangıçta kitaplar bölümünü göster
+document.querySelector('.kitaplar').classList.add('active');
+</script>
+</body>
+</html>

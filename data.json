@@ -1,0 +1,27 @@
+{
+  "books": [
+    {
+      "id": "kitap1",
+      "name": "İzem'in Maceraları",
+      "cover": "",
+      "sections": [
+        {
+          "id": "kitap1_bolum1",
+          "name": "Başlangıç",
+          "lines": [
+            "İzem dağın başındaki eve geldiğinde kar fırtınası her yeri kaplamıştı.",
+            "Soğuk rüzgar saçlarını savuruyor, kalbi heyecanla atıyordu."
+          ]
+        },
+        {
+          "id": "kitap1_bolum2",
+          "name": "Karşılaşma",
+          "lines": [
+            "Karan ile ilk karşılaşmaları odanın karanlık köşesinde gerçekleşti.",
+            "Göz göze geldiklerinde kalpleri hızla çarpıyordu."
+          ]
+        }
+      ]
+    }
+  ]
+}
